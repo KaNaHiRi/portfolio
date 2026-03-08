@@ -15,10 +15,10 @@ const SKILL_CATEGORIES = [
     color: 'border-green-200 bg-green-50',
     headerColor: 'text-green-700 bg-green-100',
     skills: [
-      { name: 'C# / .NET', level: 95 },
+      { name: 'C# / .NET', level: 85 },
       { name: 'Prisma / SQLite', level: 60 },
       { name: 'REST API設計', level: 65 },
-      { name: 'Delphi（レガシー）', level: 90 },
+      { name: 'Delphi、VBA（レガシー）', level: 85 },
     ],
   },
   {
@@ -37,9 +37,9 @@ const SKILL_CATEGORIES = [
     color: 'border-red-200 bg-red-50',
     headerColor: 'text-red-700 bg-red-100',
     skills: [
-      { name: 'PACS連携', level: 90 },
-      { name: 'HL7 / DICOM', level: 80 },
-      { name: '電子カルテ連携', level: 85 },
+      { name: 'PACS連携', level: 70 },
+      { name: 'HL7 / DICOM', level: 70 },
+      { name: '電子カルテ連携', level: 80 },
       { name: '健診システム', level: 90 },
     ],
   },

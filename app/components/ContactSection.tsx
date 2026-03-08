@@ -3,17 +3,45 @@
 import { useState } from 'react';
 import { Send, Mail, MessageSquare, Clock } from 'lucide-react';
 
+type FormData = {
+  name: string;
+  email: string;
+  type: string;
+  message: string;
+};
+
+type Errors = Partial<Record<keyof FormData, string>>;
+
+function validate(data: FormData): Errors {
+  const errors: Errors = {};
+  if (!data.name.trim()) errors.name = 'お名前を入力してください';
+  if (!data.email.trim()) {
+    errors.email = 'メールアドレスを入力してください';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    errors.email = 'メールアドレスの形式が正しくありません';
+  }
+  if (!data.message.trim()) errors.message = 'メッセージを入力してください';
+  return errors;
+}
+
 export default function ContactSection() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     type: 'consultation',
     message: '',
   });
+  const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const validationErrors = validate(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
     setStatus('sending');
     try {
       const res = await fetch('https://formspree.io/f/mdawkdjp', {
@@ -32,6 +60,11 @@ export default function ContactSection() {
     }
   };
 
+  const handleChange = (field: keyof FormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900">
       <div className="max-w-4xl mx-auto">
@@ -45,37 +78,44 @@ export default function ContactSection() {
 
         <div className="grid lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            {[
-              {
-                icon: Mail,
-                title: 'メール',
-                desc: '通常24時間以内に返信',
-                value: 'KaNaHiRi@gmail.com',
-              },
-              {
-                icon: MessageSquare,
-                title: 'CrowdWorks / Coconala',
-                desc: 'プロフィールページからDM',
-                value: '@KaNaHiRi_medical_dev',
-              },
-              {
-                icon: Clock,
-                title: '対応時間',
-                desc: '平日 4:00〜7:00\n土日祝 随時',
-                value: '',
-              },
-            ].map((info) => (
-              <div key={info.title} className="flex gap-4">
-                <div className="w-9 h-9 bg-slate-800 border border-slate-700 rounded-lg flex items-center justify-center shrink-0">
-                  <info.icon size={16} className="text-slate-400" />
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm">{info.title}</p>
-                  <p className="text-slate-500 text-xs whitespace-pre-line mt-0.5">{info.desc}</p>
-                  {info.value && <p className="text-blue-400 text-xs mt-0.5">{info.value}</p>}
-                </div>
+            <div className="flex gap-4">
+              <div className="w-9 h-9 bg-slate-800 border border-slate-700 rounded-lg flex items-center justify-center shrink-0">
+                <Mail size={16} className="text-slate-400" />
               </div>
-            ))}
+              <div>
+                <p className="text-white font-semibold text-sm">メール</p>
+                <p className="text-slate-500 text-xs mt-0.5">通常24時間以内に返信</p>
+                <p className="text-blue-400 text-xs mt-0.5">KaNaHiRi@gmail.com</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="w-9 h-9 bg-slate-800 border border-slate-700 rounded-lg flex items-center justify-center shrink-0">
+                <MessageSquare size={16} className="text-slate-400" />
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm">CrowdWorks</p>
+                <p className="text-slate-500 text-xs mt-0.5">プロフィールページからDM</p>
+                <a
+                  href="https://crowdworks.jp/public/employees/6351824"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 text-xs mt-0.5 inline-block transition-colors"
+                >
+                  プロフィールを見る →
+                </a>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="w-9 h-9 bg-slate-800 border border-slate-700 rounded-lg flex items-center justify-center shrink-0">
+                <Clock size={16} className="text-slate-400" />
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm">対応時間</p>
+                <p className="text-slate-500 text-xs whitespace-pre-line mt-0.5">{'平日 4:00〜7:00\n土日祝 随時'}</p>
+              </div>
+            </div>
           </div>
 
           <div className="lg:col-span-3">
@@ -103,12 +143,16 @@ export default function ContactSection() {
                     <input
                       id="contact-name"
                       type="text"
-                      required
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      onChange={(e) => handleChange('name', e.target.value)}
+                      className={`w-full px-3.5 py-2.5 bg-slate-800 border rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-1 text-sm ${
+                        errors.name
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-slate-700 focus:ring-blue-500 focus:border-blue-500'
+                      }`}
                       placeholder="山田 太郎"
                     />
+                    {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
                   </div>
                   <div>
                     <label htmlFor="contact-email" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
@@ -117,12 +161,16 @@ export default function ContactSection() {
                     <input
                       id="contact-email"
                       type="email"
-                      required
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      onChange={(e) => handleChange('email', e.target.value)}
+                      className={`w-full px-3.5 py-2.5 bg-slate-800 border rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-1 text-sm ${
+                        errors.email
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-slate-700 focus:ring-blue-500 focus:border-blue-500'
+                      }`}
                       placeholder="yamada@clinic.jp"
                     />
+                    {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
                   </div>
                 </div>
 
@@ -133,7 +181,7 @@ export default function ContactSection() {
                   <select
                     id="contact-type"
                     value={formData.type}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    onChange={(e) => handleChange('type', e.target.value)}
                     className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
                   >
                     <option value="consultation">無料相談</option>
@@ -149,13 +197,17 @@ export default function ContactSection() {
                   </label>
                   <textarea
                     id="contact-message"
-                    required
                     rows={5}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none text-sm"
+                    onChange={(e) => handleChange('message', e.target.value)}
+                    className={`w-full px-3.5 py-2.5 bg-slate-800 border rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-1 resize-none text-sm ${
+                      errors.message
+                        ? 'border-red-500 focus:ring-red-500'
+                        : 'border-slate-700 focus:ring-blue-500'
+                    }`}
                     placeholder="例）受付業務のWeb化を検討しています。予算は50万円ほどで、来年4月の稼働を希望しています。..."
                   />
+                  {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message}</p>}
                 </div>
 
                 {status === 'error' && (
@@ -190,7 +242,7 @@ export default function ContactSection() {
         <p className="text-slate-600 text-xs">© 2026 KaNaHiRi. All rights reserved.</p>
         <div className="flex gap-6">
           <a href="https://github.com/KaNaHiRi" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-300 text-xs transition-colors">GitHub</a>
-          <a href="https://crowdworks.jp" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-300 text-xs transition-colors">CrowdWorks</a>
+          <a href="https://crowdworks.jp/public/employees/6351824" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-300 text-xs transition-colors">CrowdWorks</a>
           <a href="https://coconala.com" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-300 text-xs transition-colors">Coconala</a>
         </div>
       </div>
