@@ -3,6 +3,7 @@ import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
 import SkillsSection from './components/SkillsSection';
 import WorksSection from './components/WorksSection';
+import ProcessSection from "./components/ProcessSection"
 import ServicesSection from './components/ServicesSection';
 import ContactSection from './components/ContactSection';
 
@@ -15,6 +16,7 @@ export default function Home() {
         <AboutSection />
         <SkillsSection />
         <WorksSection />
+        <ProcessSection />
         <ServicesSection />
         <ContactSection />
       </main>
