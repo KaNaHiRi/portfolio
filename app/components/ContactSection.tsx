@@ -85,7 +85,7 @@ export default function ContactSection() {
               <div>
                 <p className="text-white font-semibold text-sm">メール</p>
                 <p className="text-slate-500 text-xs mt-0.5">通常24時間以内に返信</p>
-                <p className="text-blue-400 text-xs mt-0.5">KaNaHiRi@gmail.com</p>
+                <p className="text-blue-400 text-xs mt-0.5">kanahiri.portfolio@gmail.com</p>
               </div>
             </div>
 
