@@ -4,10 +4,10 @@ const SKILL_CATEGORIES = [
     color: 'border-blue-200 bg-blue-50',
     headerColor: 'text-blue-700 bg-blue-100',
     skills: [
-      { name: 'Next.js', level: 60 },
-      { name: 'TypeScript', level: 60 },
-      { name: 'React', level: 60 },
-      { name: 'Tailwind CSS', level: 70 },
+      { name: 'Next.js', level: 80 },
+      { name: 'TypeScript', level: 80},
+      { name: 'React', level: 80 },
+      { name: 'Tailwind CSS', level: 85 },
     ],
   },
   {
@@ -15,10 +15,10 @@ const SKILL_CATEGORIES = [
     color: 'border-green-200 bg-green-50',
     headerColor: 'text-green-700 bg-green-100',
     skills: [
-      { name: 'C# / .NET', level: 85 },
-      { name: 'Prisma / SQLite', level: 60 },
-      { name: 'REST API設計', level: 65 },
-      { name: 'Delphi、VBA（レガシー）', level: 85 },
+      { name: 'C# / .NET', level: 90 },
+      { name: 'Prisma / SQLite', level: 80 },
+      { name: 'REST API設計', level: 80 },
+      { name: 'Delphi、VBA（レガシー）', level: 90 },
     ],
   },
   {
@@ -26,10 +26,10 @@ const SKILL_CATEGORIES = [
     color: 'border-purple-200 bg-purple-50',
     headerColor: 'text-purple-700 bg-purple-100',
     skills: [
-      { name: 'Jest / RTL', level: 60 },
-      { name: 'Playwright', level: 55 },
-      { name: 'GitHub Actions', level: 60 },
-      { name: 'Vercel', level: 65 },
+      { name: 'Jest / RTL', level: 80 },
+      { name: 'Playwright', level: 80 },
+      { name: 'GitHub Actions', level: 85 },
+      { name: 'Vercel', level: 85 },
     ],
   },
   {
