@@ -1,4 +1,5 @@
 ﻿import { Stethoscope, Code2, TrendingUp, Users } from "lucide-react"
+import Image from "next/image"
 
 const STRENGTHS = [
   { icon: Stethoscope, title: "医療現場を知っている", description: "健康診断システムの開発・保守10年以上。「現場で使われないシステム」を作らないための視点を持っています。", color: "text-red-500 bg-red-50" },
@@ -18,7 +19,13 @@ export default function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl flex items-center justify-center text-white text-3xl font-bold shadow-lg">K</div>
+              <Image
+                src="/logo-knahiri.png"
+                alt="KaNaHiRi Logo"
+                width={80}
+                height={80}
+                className="rounded-2xl object-contain shadow-lg"
+              />
               <div>
                 <h3 className="text-2xl font-bold text-gray-900">KaNaHiRi</h3>
                 <p className="text-gray-500 text-sm">医療システム部門 勤務</p>
