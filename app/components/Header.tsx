@@ -1,7 +1,8 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, Code2 } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
 
 const NAV_ITEMS = [
   { label: 'About', href: '#about' },
@@ -32,9 +33,13 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <a href="#" className="flex items-center gap-2 font-bold text-gray-900">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-lg flex items-center justify-center">
-              <Code2 size={16} className="text-white" />
-            </div>
+            <Image
+              src="/logo-knahiri.png"
+              alt="KaNaHiRi Logo"
+              width={32}
+              height={32}
+              className="rounded-lg object-contain"
+            />
             <span>KaNaHiRi</span>
           </a>
 
