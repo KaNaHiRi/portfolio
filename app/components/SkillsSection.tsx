@@ -3,66 +3,59 @@ const SKILL_CATEGORIES = [
     category: 'フロントエンド',
     color: 'border-blue-200 bg-blue-50',
     headerColor: 'text-blue-700 bg-blue-100',
+    badgeColor: 'bg-blue-100 text-blue-700',
     skills: [
-      { name: 'Next.js', level: 80 },
-      { name: 'TypeScript', level: 80},
-      { name: 'React', level: 80 },
-      { name: 'Tailwind CSS', level: 85 },
+      { name: 'Next.js', badge: '実装済み' },
+      { name: 'TypeScript', badge: '実装済み' },
+      { name: 'React', badge: '実装済み' },
+      { name: 'Tailwind CSS', badge: '実装済み' },
     ],
   },
   {
     category: 'バックエンド・DB',
     color: 'border-green-200 bg-green-50',
     headerColor: 'text-green-700 bg-green-100',
+    badgeColor: 'bg-green-100 text-green-700',
     skills: [
-      { name: 'C# / .NET', level: 90 },
-      { name: 'Prisma / SQLite', level: 80 },
-      { name: 'REST API設計', level: 80 },
-      { name: 'Delphi、VBA（レガシー）', level: 90 },
+      { name: 'C# / .NET', badge: '実務10年+' },
+      { name: 'Prisma / SQLite', badge: '実装済み' },
+      { name: 'REST API設計', badge: '実装済み' },
+      { name: 'Delphi / VBA', badge: '実務10年+' },
     ],
   },
   {
     category: '品質・インフラ',
     color: 'border-purple-200 bg-purple-50',
     headerColor: 'text-purple-700 bg-purple-100',
+    badgeColor: 'bg-purple-100 text-purple-700',
     skills: [
-      { name: 'Jest / RTL', level: 80 },
-      { name: 'Playwright', level: 80 },
-      { name: 'GitHub Actions', level: 85 },
-      { name: 'Vercel', level: 85 },
+      { name: 'Jest / RTL', badge: 'CI/CD構築済み' },
+      { name: 'Playwright', badge: 'CI/CD構築済み' },
+      { name: 'GitHub Actions', badge: '構築済み' },
+      { name: 'Vercel', badge: '運用中' },
     ],
   },
   {
     category: '医療ドメイン',
     color: 'border-red-200 bg-red-50',
     headerColor: 'text-red-700 bg-red-100',
+    badgeColor: 'bg-red-100 text-red-700',
     skills: [
-      { name: 'PACS連携', level: 70 },
-      { name: 'HL7 / DICOM', level: 70 },
-      { name: '電子カルテ連携', level: 80 },
-      { name: '健診システム', level: 90 },
+      { name: 'PACS連携', badge: '実務経験あり' },
+      { name: 'HL7 / DICOM', badge: '実務経験あり' },
+      { name: '電子カルテ連携', badge: '実務経験あり' },
+      { name: '健診システム', badge: '実務10年+' },
     ],
   },
 ];
 
-function SkillBar({ name, level }: { name: string; level: number }) {
+function SkillBadge({ name, badge, badgeColor }: { name: string; badge: string; badgeColor: string }) {
   return (
-    <div className="space-y-1">
-      <div className="flex justify-between items-center">
-        <span className="text-sm font-medium text-gray-700">{name}</span>
-        <span className="text-xs text-gray-400">{level}%</span>
-      </div>
-      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"
-          style={{ width: `${level}%` }}
-          role="progressbar"
-          aria-valuenow={level}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-label={`${name}: ${level}%`}
-        />
-      </div>
+    <div className="flex items-center justify-between gap-2">
+      <span className="text-sm font-medium text-gray-700">{name}</span>
+      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${badgeColor}`}>
+        {badge}
+      </span>
     </div>
   );
 }
@@ -87,7 +80,7 @@ export default function SkillsSection() {
               </div>
               <div className="space-y-4">
                 {cat.skills.map((skill) => (
-                  <SkillBar key={skill.name} name={skill.name} level={skill.level} />
+                  <SkillBadge key={skill.name} name={skill.name} badge={skill.badge} badgeColor={cat.badgeColor} />
                 ))}
               </div>
             </div>
