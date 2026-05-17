@@ -113,7 +113,7 @@ export default function ContactSection() {
               </div>
               <div>
                 <p className="text-white font-semibold text-sm">対応時間</p>
-                <p className="text-slate-500 text-xs whitespace-pre-line mt-0.5">{'平日 4:00〜7:00\n土日祝 随時'}</p>
+                <p className="text-slate-500 text-xs whitespace-pre-line mt-0.5">{'平日 4:00〜7:00 / 20:00〜22:00\n土日祝 随時'}</p>
               </div>
             </div>
           </div>
