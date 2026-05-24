@@ -28,6 +28,19 @@ const WORKS = [
     badgeColor: "bg-green-100 text-green-700",
     status: "公開中",
   },
+  {
+    title: "特定健診Web問診システム",
+    subtitle: "特定健診向けWeb問診 — ポートフォリオ作品",
+    description: "QRコード1枚で受診者が自分で問診票に回答できる、特定健診向けのWebシステムです。4言語対応・スタッフ管理画面・セキュリティ機能など、実運用を意識した機能を一通り実装しました。",
+    demoUrl: "https://web-kenshin-app.vercel.app",
+    githubUrl: "https://github.com/KaNaHiRi/web-kenshin-app",
+    gifUrl: null,
+    tags: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "NextAuth.js", "Tailwind CSS", "Vercel"],
+    features: ["QRコードで問診票に回答", "4言語対応（日英・簡繁体）", "管理画面（回答一覧・集計・CSV）", "ログイン制限・セッションタイムアウト", "年度別集計グラフ（recharts）"],
+    badge: "デモあり",
+    badgeColor: "bg-green-100 text-green-700",
+    status: "本番稼働中",
+  },
 ]
 
 export default function WorksSection() {
